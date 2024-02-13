@@ -1,3 +1,6 @@
+#NOTES -> Start at movie.rb
+#USEFUL resource to search validations methods: https://guides.rubyonrails.org/active_record_validations.html
+
 Rails.application.routes.draw do
   get("/", { :controller => "misc", :action => "homepage" })
 
