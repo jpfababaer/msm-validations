@@ -16,11 +16,11 @@
 #1 Using the "validations" feature of ActiveRecord, we can create validation rules that, if are NOT met, will NOT allow the new data to be saved into the database. 
 class Movie < ApplicationRecord
 
-#2 Defining our validation: this validation says "If the user does NOT include a director_id -> data will NOT be saved because .save will return FALSE"
+#2 Defining our validation: this validation says "If the user does NOT include a director_id -> the WHOLE input will NOT be saved because .save will return FALSE"
 
-#3 Validates format: the first argument -> a Symbol that represents the name of the COLUMN we are declaring constraints for. the second argument -> a Hash that defines the constraints we are applying (built-in). The most common uses are :presence = an input is present. :uniqueness = the value is not duplicated. :numericality -> validates that the value input only has numeric values.
+#3 Validates format: the first argument -> a Symbol that represents the name of the COLUMN we are declaring constraints for. the second argument -> a Hash that defines the constraints we are applying (built-in values). The most common uses are :presence = an input NEEDS to be present. :uniqueness = the value can NOT be a duplicate. :numericality -> validates that the value input only has numeric values.
 
-#4 For the three COMMON hashes, the value can be associated with "true" or an INNER hash can be used to further specify constraints (i.e. minimum or maximul values for numericality)
+#4 For the three COMMON hashes, the value can be associated with "true" or an INNER hash can be used to further specify constraints (i.e. minimum or maximum values for numericality)
 validates(:director_id, { presence: true } )
 
 #Syntax change. Secord argument is still a Hash.
@@ -37,7 +37,7 @@ validates(:title, uniqueness: true)
   end
 end
 
-=begin
+
 #5 Use "rails c" to debug. To see why an Instance was NOT saved, we can check using the ActiveRecord attribute "errors": 
 
 Example:
@@ -51,16 +51,16 @@ Example:
 => {:director_id=>["can't be blank"]}
 [5] pry(main)> m.errors.full_messages
 => ["Director can't be blank"]
-=end
 
-#6 Most common integiry checks are:
+
+#6 Most common integrity checks are:
 #   a. Make sure a value is present before saving. Especially useful in the case of foreign keys. (use :presence)
 
 #   b. Make sure a value is unique before saving it (i.e. no other rows have the same value in that column, use :uniqueness)
 
 #7 New validations effects (added :uniqueness)
 
-=begin
+
 
 [1] pry(main)> m = Movie.new
 => #<Movie:0x00007fc5b9603520 id: nil, title: nil, year: nil, duration: nil, description: nil, image: nil, director_id: nil, created_at: nil, updated_at: nil>
@@ -85,5 +85,3 @@ Example:
 => false
 [8] pry(main)> n.errors.full_messages
 => ["Director can't be blank", "Title has already been taken"]
-
-=end
